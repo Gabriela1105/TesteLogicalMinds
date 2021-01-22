@@ -10,6 +10,7 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +24,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +34,22 @@
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\Enums\Pix.ts" />
+    <None Remove="ClientApp\src\app\Enums\TipoTelefone.ts" />
+    <None Remove="ClientApp\src\app\Models\Cliente.ts" />
+    <None Remove="ClientApp\src\app\Models\Endereco.ts" />
+    <None Remove="ClientApp\src\app\Models\Telefone.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\Enums\Pix.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Enums\TipoTelefone.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Models\Cliente.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Models\Endereco.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Models\Telefone.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

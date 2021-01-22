@@ -22,7 +22,7 @@ namespace TesteLogicalMinds.Controllers
         }
 
         // GET: api/Cliente
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
             try

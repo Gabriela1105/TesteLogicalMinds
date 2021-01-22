@@ -1,24 +1,95 @@
-<h1 id="tableLabel">Weather forecast</h1>
+<h1 id="tableLabel">Clientes</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<div class="modal-body">
+  <form [formGroup]="formControl">
+    <label>
+      <i>Nome:</i><br />
+      <input type="text" formControlName="Nome" value="" placeholder="Seu Nome" />
+    </label><br />
+    <label>
+      <i>RG:</i><br />
+      <input type="text" formControlName="RG" value="" placeholder="99.999.999-99" />
+    </label><br />
+    <label>
+      <i>CPF:</i><br />
+      <input type="text" formControlName="CPF" value="" placeholder="999.999.999-99" />
+    </label><br />
+    <label>
+      <i>Data Nascimento:</i><br />
+      <input type="date" formControlName="DataNascimento" value=""  />
+    </label><br />
+    <label>
+      <i>Nome Progenitor 1:</i><br />
+      <input type="text" formControlName="NomeProgenitor1" value="" placeholder="Nome" />
+    </label><br />
+    <label>
+      <i>Nome Progenitor 2:</i><br />
+      <input type="text" formControlName="NomeProgenitor2" value="" placeholder="Nome" />
+    </label><br />
+    <label>
+      <i>E_mail:</i><br />
+      <input type="text" formControlName="E_mail" value="" placeholder="exemplo@email.com" />
+    </label><br />
+    <label>
+      <i>Profissao:</i><br />
+      <input type="text" formControlName="Profissao" value="" placeholder="expemplo,professor...." />
+    </label><br />
+    <label>
+      <i>Data Emissao:</i><br />
+      <input type="date" formControlName="DataEmissao" value="" />
+    </label><br />
+    <label>
+      <i>Conta:</i><br />
+      <input type="text" formControlName="Conta" value="" placeholder="99999-9" />
+    </label><br />
+    <label>
+      <i>Agencia:</i><br />
+      <input type="text" formControlName="Agencia" value="" placeholder="9999" />
+    </label><br />
+    <label>
+      <i>Pix:</i><br />
+      <input type="text" formControlName="Pix" value="" placeholder="CPF,CNPJ,E-mail...etcs" />
+    </label><br />
+    <button type="submit" class="btn btn-primary">Salvar</button>
+  </form>
 
-<p *ngIf="!forecasts"><em>Loading...</em></p>
+</div>
 
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
+<p *ngIf="!clientes"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="clientes">
   <thead>
     <tr>
-      <th>Date</th>
-      <th>Temp. (C)</th>
-      <th>Temp. (F)</th>
-      <th>Summary</th>
+      <th>Id </th>
+      <th>Nome</th>
+      <th>RG </th>
+      <th>CPF </th>
+      <th>DataNascimento </th>
+      <th>NomeProgenitor1</th>
+      <th>NomeProgenitor2</th>
+      <th>E_mail</th>
+      <th>Profissao</th>
+      <th>DataEmissao</th>
+      <th>Conta</th>
+      <th>Agencia</th>
+      <th>Pix</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.date }}</td>
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.summary }}</td>
+    <tr *ngFor="let cliente of clientes">
+      <td>{{ cliente.Id }}</td>
+      <td>{{ cliente.Nome }}</td>
+      <td>{{ cliente.RG }}</td>
+      <td>{{ cliente.CPF }}</td>
+      <td>{{ cliente.DataNascimento }}</td>
+      <td>{{ cliente.NomeProgenitor1 }}</td>
+      <td>{{ cliente.NomeProgenitor2 }}</td>
+      <td>{{ cliente.E_mail }}</td>
+      <td>{{ cliente.Profissao }}</td>
+      <td>{{ cliente.DataEmissao }}</td>
+      <td>{{ cliente.Conta }}</td>
+      <td>{{ cliente.Agencia }}</td>
+      <td>{{ cliente.Pix }}</td>
     </tr>
   </tbody>
 </table>

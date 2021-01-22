@@ -6,6 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.VisualBasic;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using System;
+using System.IO;
+using System.Reflection;
+using System.Runtime.Intrinsics;
 using TesteLogicalMinds.Contexts;
 
 namespace TesteLogicalMinds
@@ -24,7 +31,13 @@ namespace TesteLogicalMinds
         {
             var connection = Configuration["ConnectionString"];
             services.AddDbContext<BancoContext>(opt => opt.UseSqlServer(connection));
-
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1.0.1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Cliente", Version = "v1" });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
 
 
             services.AddControllersWithViews();
@@ -56,6 +69,15 @@ namespace TesteLogicalMinds
                 app.UseSpaStaticFiles();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                string swaggerJsonBasePath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
+                c.SwaggerEndpoint("../v1/swagger.json", "Clinte V1");
+                c.InjectStylesheet("../Css/Swagger-ui.css");
+                c.InjectJavascript("../Scripts/Swagger-js.js");
+                c.DocExpansion(DocExpansion.None);
+            });
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
