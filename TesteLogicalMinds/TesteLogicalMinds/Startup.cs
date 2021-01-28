@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,8 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.Intrinsics;
 using TesteLogicalMinds.Contexts;
+using TesteLogicalMinds.Services;
+using TesteLogicalMinds.Services.Interfaces;
 
 namespace TesteLogicalMinds
 {
@@ -38,7 +41,10 @@ namespace TesteLogicalMinds
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
-
+            services.AddAuthentication(IISDefaults.AuthenticationScheme);
+            services.AddSingleton<IClienteServices>(s => new ClienteServices());
+            
+            services.AddControllers().AddNewtonsoftJson();
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
@@ -68,14 +74,17 @@ namespace TesteLogicalMinds
             {
                 app.UseSpaStaticFiles();
             }
+            app.UseCors(c => c.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                string swaggerJsonBasePath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
-                c.SwaggerEndpoint("../v1/swagger.json", "Clinte V1");
-                c.InjectStylesheet("../Css/Swagger-ui.css");
-                c.InjectJavascript("../Scripts/Swagger-js.js");
+                //string swaggerJsonBasePath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Clinte V1");
+                c.InjectStylesheet("/swagger/Css/Swagger-ui.css");
+                c.InjectJavascript("/swagger/Scripts/Swagger-js.js");
                 c.DocExpansion(DocExpansion.None);
             });
             app.UseRouting();

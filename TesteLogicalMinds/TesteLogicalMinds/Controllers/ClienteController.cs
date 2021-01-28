@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TesteLogicalMinds.Contexts;
 using TesteLogicalMinds.Models;
+using TesteLogicalMinds.Services;
+using TesteLogicalMinds.Services.Interfaces;
 
 namespace TesteLogicalMinds.Controllers
 {
@@ -15,21 +17,24 @@ namespace TesteLogicalMinds.Controllers
     public class ClienteController : ControllerBase
     {
         private readonly BancoContext _context;
+        private readonly IClienteServices _cliente;
 
         public ClienteController(BancoContext context)
         {
             _context = context;
+            _cliente = new ClienteServices(_context);
         }
 
         // GET: api/Cliente
         [HttpGet("all")]
-        public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
+        public ActionResult<IEnumerable<Cliente>> GetClientes()
         {
             try
             {
-                return await _context.Clientes.ToListAsync();
+                var result = _cliente.GetClientes().Result;
+                return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -75,7 +80,7 @@ namespace TesteLogicalMinds.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClienteExists(id))
+                if (!_context.Clientes.Any(e => e.Id == id))
                 {
                     return NotFound();
                 }
@@ -91,7 +96,7 @@ namespace TesteLogicalMinds.Controllers
         // POST: api/Cliente
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        [HttpPost("save")]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
             try
@@ -130,9 +135,5 @@ namespace TesteLogicalMinds.Controllers
             }
         }
 
-        private bool ClienteExists(int id)
-        {
-            return _context.Clientes.Any(e => e.Id == id);
-        }
     }
 }

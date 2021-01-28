@@ -7,6 +7,6 @@ export class Endereco {
   Rua: string;
   Numero: string;
   Complemento: string;
-  IdCliente: string;
+  IdCliente: number;
 
 }

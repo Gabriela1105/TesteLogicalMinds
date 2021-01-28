@@ -4,6 +4,6 @@ export class Telefone {
   Id: number;
   NomeContato: string;
   NumeroTelefone: number;
-  IdCliente: string
+  IdCliente: number;
   TipoTelefone: TipoTelefone;
 }

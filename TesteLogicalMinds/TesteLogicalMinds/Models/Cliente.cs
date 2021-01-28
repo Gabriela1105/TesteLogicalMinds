@@ -37,8 +37,8 @@ namespace TesteLogicalMinds.Models
         public int Agencia { get; set; }
         [Column("Pix")]
         public Pix Pix { get; set; }
-        public List<Telefone> Telefones { get; set; }
-        public List<Endereco> Enderecos { get; set; }
+        public Telefone[] Telefones { get; set; }
+        public Endereco[] Enderecos { get; set; }
 
     }
 }
