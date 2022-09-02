@@ -1,1 +1,3 @@
 # TesteLogicalMinds
+
+Projeto pessoal.
